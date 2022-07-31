@@ -39,9 +39,9 @@ Es el sector del código donde especificamos que packages vamos a necesitar impo
 
 ```go
 import (
-	"fmt"
+  "fmt"
 
-	"rsc.io/quote"
+  "rsc.io/quote"
 )
 ```
 
@@ -50,13 +50,11 @@ Es la funcion principal (jaja) desde la que se llaman el resto de las funciones,
 
 ```go
 func main() {
-	fmt.Println(quote.Go())
+  fmt.Println(quote.Go())
 }
 ```
 
 Fuera de main, se deben definir el resto de las funciones que luego quiera ejecutar, y llamarlas desde dentro de main, o no se podrá acceder a las mismas.
-
----
 
 # Variables y tipos de datos
 
@@ -69,15 +67,15 @@ Ejemplo de declaración y luego asignación:
 var myNum int // declare one var
 
 var (
-	myBool bool
-	myFloat float32
-	myString string
+  myBool bool
+  myFloat float32
+  myString string
 ) // declare multiple vars
 
 func main () {
-	myBool = true // single initialization
-	myFloat, myNum = 3.22, 5 // multiple initialization
-	myString = "Hello world" // must have double quotes
+  myBool = true // single initialization
+  myFloat, myNum = 3.22, 5 // multiple initialization
+  myString = "Hello world" // must have double quotes
 }
 ```
 
@@ -94,7 +92,7 @@ illegal := 40
 var myInt int = 40
 
 func wal() {
-	legal := 40 // because it's function scoped
+  legal := 40 // because it's function scoped
 }
 ```
 2. No se pueden usar mas de una vez en el mismo scope, ya que el operador crea una nueva variable, y la misma ya esta declarada, por lo que arroja error.
@@ -119,17 +117,36 @@ bar, thing := myFunc() // thing is new
 var foo int = 40
 
 func main() {
-	foo := 70 // this is a new scope
-	foo = 40 // here we are just reasigning
+  foo := 70 // this is a new scope
+  foo = 40 // here we are just reasigning
 }
 ```
 6. Se puede declarar el mismo nombre con := dentro de sentencias if, for, switch ya que las mismas pertenecen al scope de esa sentencia.
 ```go
 foo := 40
 if foo := myFunc(); foo == 314 {
-	// here foo is scoped to 314
-	// whatever the function does
+  // here foo is scoped to 314
+  // whatever the function does
 }
 // here foo still is 40
+```
+
+## Tipos
+Go incluye varios types, numéricos, strings, booleanos, errores, y la capacidad para crear tipos personalizados.
+- Los string son una secuencia de caracteres UTF-8, encerrados en comillas dobles
+- Las variables numéricas tienen variantes según el espacio en memoria con 8, 16, 32 y 64 bit, pudiendo ser con signo (int) o sin signo (uint).
+Un byte es un alias para un uint8 (entero sin signo de 8 bit). Una runa (rune) es un alias para un int32 (entero de 32 bit con signo). 
+- Los números de coma flotante son float32 o float64.
+- Soporta también números complejos, representados como complex32 o complex64.
+
+Cuando una variable es declarada, se le asigna un valor null del tipo seleccionado.
+Por ejemplo, `var i int` le daría el valor 0 a i, mientras que `var a string` le daría el valor "".
+
+### Listas
+Se pueden guardar listas de elementos en arrays, slices o maps
+- Los **array** se definen con un tamaño fijo y un tipo de dato comun para todos sus elementos.
+Al ser el tamaño parte de la definición, los array no pueden crecer ni achicarse (para eso es necesario otro type)
+```go
+var  catNames = [4]string{"Pol", "Snow", "Daisy", "Orlando"}
 ```
 
