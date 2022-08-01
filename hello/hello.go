@@ -25,8 +25,22 @@ func main() {
 	// Lists
 	var catNames = [4]string{"Pol", "Snow", "Daisy", "Orlando"}
 
-	for i := 0; i < len(catNames); i++ {
-		fmt.Println("Cat number", i+1, "is", catNames[i])
+	// for i := 0; i < len(catNames); i++ {
+	// 	fmt.Println("Cat number", i+1, "is", catNames[i])
+	// }
+
+	// var someCats = catNames[1:3]
+
+	// for i := 0; i < len(someCats); i++ {
+	// 	fmt.Println("Selected cat is", someCats[i])
+	// }
+
+	var allCats = catNames[:]
+	allCats = append(allCats, "Sparkle")
+
+	for i := 0; i < len(allCats); i++ {
+		fmt.Println("A cat is", allCats[i])
 	}
 
+	// var intSlice = []int16{1, 2, 3, 4, 5, 6, 7}
 }

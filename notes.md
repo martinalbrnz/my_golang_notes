@@ -142,11 +142,39 @@ Un byte es un alias para un uint8 (entero sin signo de 8 bit). Una runa (rune) e
 Cuando una variable es declarada, se le asigna un valor null del tipo seleccionado.
 Por ejemplo, `var i int` le daría el valor 0 a i, mientras que `var a string` le daría el valor "".
 
-### Listas
+### Arrays
 Se pueden guardar listas de elementos en arrays, slices o maps
-- Los **array** se definen con un tamaño fijo y un tipo de dato comun para todos sus elementos.
+Los **array** se definen con un tamaño fijo y un tipo de dato comun para todos sus elementos.
 Al ser el tamaño parte de la definición, los array no pueden crecer ni achicarse (para eso es necesario otro type)
 ```go
 var  catNames = [4]string{"Pol", "Snow", "Daisy", "Orlando"}
 ```
+
+### Slices
+Los **slices** son similares a los slices de python. Actuan sobre un array y el numero de elementos visibles del slice determina su largo (length).
+
+Si el Array sobre el que actua el slice es mayor que el slice, este último todavía tiene la capacidad de crecer.
+Podríamos pensar en length como la cantidad actual de elementos y en capacity como el número máximo de elementos posibles.
+ej: `var someCats = catNames[1:3]` incluye los catNames en los índices 1 y 2, no así el del índice 3.
+
+Es importante destacar que si intentamos, por ejemplo, pasar `var someCats = catNames[1:5]` a catNames, cuyo length es 4, vamos a obtener el error *"invalid argument: index 5 (constant of type int) is out of bounds "*.
+
+Pueden crearse slices de la misma forma que un array, pero sin especificar el tamaño, de forma de poder aplicarle métodos de slices.
+
+```go
+var intSlice = []int16{1, 2, 3, 4, 5, 6, 7}
+```
+
+Las posibilidades de los slice son similares a las de python, por ejemplo:
+
+```go
+var allCats = catNames[:] // copy of catNames array
+allCats = append(allCats, "Sparkle") // append "Sparkle" in the end, not possible with arrays
+var allCats = catNames[:2] // elements on index 0, 1
+var allCats = catNames[2:] // elements on index 2, 3, 4...
+```
+
+
+
+
 
