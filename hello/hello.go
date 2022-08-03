@@ -23,7 +23,7 @@ func main() {
 	fmt.Println(naturalNullInt, naturalNullString) // 2 Good
 
 	// Lists
-	var catNames = [4]string{"Pol", "Snow", "Daisy", "Orlando"}
+	// var catNames = [4]string{"Pol", "Snow", "Daisy", "Orlando"}
 
 	// for i := 0; i < len(catNames); i++ {
 	// 	fmt.Println("Cat number", i+1, "is", catNames[i])
@@ -35,12 +35,34 @@ func main() {
 	// 	fmt.Println("Selected cat is", someCats[i])
 	// }
 
-	var allCats = catNames[:]
-	allCats = append(allCats, "Sparkle")
+	// var allCats = catNames[:]
+	// allCats = append(allCats, "Sparkle")
 
-	for i := 0; i < len(allCats); i++ {
-		fmt.Println("A cat is", allCats[i])
-	}
+	// for i := 0; i < len(allCats); i++ {
+	// 	fmt.Println("A cat is", allCats[i])
+	// }
 
 	// var intSlice = []int16{1, 2, 3, 4, 5, 6, 7}
+
+	catsWeight := map[string]float64{
+		"Pol": 4.2, "Snow": 5.1, "Daisy": 3.8, "Orlando": 5.2,
+	}
+
+	for k, v := range catsWeight {
+		fmt.Println(k, "weight is about", v, "k")
+	}
+
+	// Reversing keys and values for fun
+	keysAndVals := map[string]string{
+		"hello": "world", "question": "answer", "day": "night", "cat": "dog",
+	}
+	var valsAndKeys = make(map[string]string)
+
+	for k, v := range keysAndVals {
+		valsAndKeys[v] = k
+	}
+
+	for k, v := range valsAndKeys {
+		fmt.Println(k, "is not", v)
+	}
 }

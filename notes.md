@@ -56,8 +56,35 @@ func main() {
 
 Fuera de main, se deben definir el resto de las funciones que luego quiera ejecutar, y llamarlas desde dentro de main, o no se podrá acceder a las mismas.
 
-# Variables y tipos de datos
+# Operadores y palabras clave
+### Identificadores
+Los identificadores son secuencias de letras y/o digitos que identifican entidades de un programa, como variables o tipos.
+por ejemplo:
+```go
+var holaMundo = "Hola mundo!"
+```
+En este caso holaMundo es un identificador
+### Palabras clave (keywords)
+Las palabras clave estan reservadas por el lenguaje y no pueden usarse como identificadores.
+```
+break        default      func         interface    select
+case         defer        go           map          struct
+chan         else         goto         package      switch
+const        fallthrough  if           range        type
+continue     for          import       return       var
+```
 
+### Operadores
+```
++    &     +=    &=     &&    ==    !=    (    )
+-    |     -=    |=     ||    <     <=    [    ]
+*    ^     *=    ^=     <-    >     >=    {    }
+/    <<    /=    <<=    ++    =     :=    ,    ;
+%    >>    %=    >>=    --    !     ...   .    :
+     &^          &^=          ~
+```
+Muchos de estos son los típicos operadores de otros lenguajes.
+# Variables y tipos de datos
 ## Declarar y asignar
 Las variables pueden declararse y asignarse al mismo tiempo o ser declaradas primero y luego inicializadas.
 Deben estar antecedidas por la palabra clave `var` y pueden declararse múltiples variables al mismo tiempo. Si las declaro sin asignar, debo especificar el `type`, que al ser de tipado estático, no cambiará durante el tiempo de ejecución.
@@ -133,14 +160,16 @@ if foo := myFunc(); foo == 314 {
 
 ## Tipos
 Go incluye varios types, numéricos, strings, booleanos, errores, y la capacidad para crear tipos personalizados.
-- Los string son una secuencia de caracteres UTF-8, encerrados en comillas dobles
+### Number
 - Las variables numéricas tienen variantes según el espacio en memoria con 8, 16, 32 y 64 bit, pudiendo ser con signo (int) o sin signo (uint).
 Un byte es un alias para un uint8 (entero sin signo de 8 bit). Una runa (rune) es un alias para un int32 (entero de 32 bit con signo). 
 - Los números de coma flotante son float32 o float64.
 - Soporta también números complejos, representados como complex32 o complex64.
-
-Cuando una variable es declarada, se le asigna un valor null del tipo seleccionado.
-Por ejemplo, `var i int` le daría el valor 0 a i, mientras que `var a string` le daría el valor "".
+### String
+Los string son una secuencia de caracteres UTF-8, encerrados en comillas dobles.
+Son inmutables, una vez creados no se puede cambiar el contenido del mismo. Podemos acceder al largo del string con la funcion len().
+No puedo acceder a la locación en memoria de un elemento de un string, por ejemplo, si tengo `s[i]`, no puedo acceder a `&s[i]`.
+Por defecto, toma el valor "".
 
 ### Arrays
 Se pueden guardar listas de elementos en arrays, slices o maps
@@ -149,6 +178,7 @@ Al ser el tamaño parte de la definición, los array no pueden crecer ni achicar
 ```go
 var  catNames = [4]string{"Pol", "Snow", "Daisy", "Orlando"}
 ```
+Siempre una sola dimension, aunque pueden estar formados por otros arrays para formar estructuras multidimensionales.
 
 ### Slices
 Los **slices** son similares a los slices de python. Actuan sobre un array y el numero de elementos visibles del slice determina su largo (length).
@@ -173,8 +203,42 @@ allCats = append(allCats, "Sparkle") // append "Sparkle" in the end, not possibl
 var allCats = catNames[:2] // elements on index 0, 1
 var allCats = catNames[2:] // elements on index 2, 3, 4...
 ```
+Al igual que los array, solo pueden tener una dimensión, pero también pueden tener como elementos otros array.
+Considerar que estos slices internos deben inicializarse por separado.
+
+### Structs
+Los structs son una secuencia de elementos nombrados, cada uno de los cuales tiene un nombre único y un tipo.
+```go
+// empty struct
+struct {}
+
+// struct with 6 fields
+struct {
+  x, y int
+  u float32
+  _ float32
+  A *[]int
+  F func()
+} 
+```
+Un campo declarado con un tipo (*type*) pero sin nombre (*name*) se denomina campo incrustado (*embedded field*).
+Este debe ser especificado con un nombre de tipo `T` o como un puntero (*pointer*) a un nombre de tipo no interface `*T` y T en si mismo no debe ser de tipo pointer
+Un campo o método `f` de un campo incrustado en un struct x se denomina com promovido (*promoted*) si `x.f` es un selector legal que denota ese campo o método f.
+Estos actuan como campos normales de un struct con la diferencia de que no pueden ser usados como *field names* (algo asi como privados? idk...).
 
 
+### Maps
+Es una estructura de datos que almacena pares key-value que tienen un tiempo de búsqueda constante, a costas de aleatorizar el orden de los pares key-value.
 
+```go
+catsWeight := map[string]float64{
+  "Pol": 4.2, "Snow":  5.1, "Daisy": 3.8, "Orlando": 5.2,
+}
 
+for k, v := range catsWeight {
+  fmt.Println(k, "weight is about", v, "k")
+}
+```
+
+Notar como puedo acceder a key y a value por separado con k y v (similar a python)
 
