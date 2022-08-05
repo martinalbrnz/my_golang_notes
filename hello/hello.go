@@ -4,6 +4,12 @@ import "fmt"
 
 var myNum int
 
+func pointerValueChanger(val *int) {
+	fmt.Println("Before change", *val)
+	*val = 1
+	fmt.Println("Afterchange", *val)
+}
+
 func main() {
 	fmt.Println("--Types--")
 	myNum = 36
@@ -65,4 +71,7 @@ func main() {
 	for k, v := range valsAndKeys {
 		fmt.Println(k, "is not", v)
 	}
+
+	aLonelyTwo := 2
+	pointerValueChanger(&aLonelyTwo)
 }

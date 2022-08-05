@@ -226,6 +226,49 @@ Este debe ser especificado con un nombre de tipo `T` o como un puntero (*pointer
 Un campo o método `f` de un campo incrustado en un struct x se denomina com promovido (*promoted*) si `x.f` es un selector legal que denota ese campo o método f.
 Estos actuan como campos normales de un struct con la diferencia de que no pueden ser usados como *field names* (algo asi como privados? idk...).
 
+### Pointers
+Denota un set (lista de elementos únicos) de todos los pointers a variables de un tipo dado.
+```go
+*Point
+*[4]Point
+```
+Los punteros hacen referencia a una dirección en memoria donde esta guardado determinado valor, no al valor en si mismo.
+```go
+// No cambia el valor de x
+func zero(x int) {
+  x = 0
+}
+
+// Recibe una dirección de memoria como parametro
+func otherZero(xPtr *int) {
+  // Cambia el valor de esa dirección
+  *xPtr = 0
+}
+
+func main() {
+  x := 5
+  zero(x)
+  fmt.Println(x) // Sigue siendo 5
+
+  otherZero(&x) // Pasamos la dirección en memoria
+  fmt.Println(x) // ahora x es 0
+}
+```
+Se puede ver la diferencia entre los dos operadores * y &.
+En este caso, primero representamos el puntero con `*int`. También podemos usar el * para desreferenciar las variables del puntero, por ejemplo: 
+```go
+*xPtr = 0 // Guardar int 0 en esta dirección
+xPtr = 0 // Error! No es un int, es *int
+``` 
+
+El operador & nos sirve para referirnos a la dirección de una variable, por eso cuando llamamos a otherZero() le pasamos &x como parámetro.
+En este caso &x retorna un valor de tipo *int, ya que x es un int.
+&x en main() y xPtr en otherZero hacen referencia a la misma dirección de memoria.
+
+También puede obtenerse un pointer con la función new(), que toma un tipo como argumento, asigna una cantidad suficiente de memoria para guardar un objeto de ese tipo y devuelve un pointer a esa dirección.
+```go
+xPtr := new(int)
+```
 
 ### Maps
 Es una estructura de datos que almacena pares key-value que tienen un tiempo de búsqueda constante, a costas de aleatorizar el orden de los pares key-value.
